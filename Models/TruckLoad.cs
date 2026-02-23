@@ -3,8 +3,8 @@ namespace TruckBackend.Models;
 // Represents cargo (data + behavior)
 public class TruckLoad
 {
-    public int Weight { get; set; }
-    public string Destination { get; set; } = "Unknown";
+    public int Weight { get; private set; }
+    public string Destination { get; private set; } = "Unknown";
 
     public TruckLoad()
     {
