@@ -1,0 +1,30 @@
+{
+  "name": "C# (.NET) Dev Container",
+  "image": "mcr.microsoft.com/dotnet/sdk:8.0",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/dotnet:1": {
+      "version": "8.0"
+    }
+  },
+
+  "mounts": [
+    "source=${env:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
+  ],
+  
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/ssh-agent"
+  },
+
+  "postCreateCommand": "apt-get update && apt-get install -y openssh-client && dotnet restore",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "editorconfig.editorconfig"
+      ]
+    }
+  }
+}
