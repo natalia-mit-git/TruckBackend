@@ -1,0 +1,19 @@
+*.suo
+*.user
+.gitconfig
+
+# secrets
+.env
+
+# Build results
+/obj
+/bin
+
+# Visual Studio cache/options directory
+.vscode/
+
+# development settings
+appsettings.Development.json
+
+# maybe later
+/.github
