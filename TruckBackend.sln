@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TruckBackend", "TruckBackend.csproj", "{018F0A70-D8AB-4F94-B7E6-0CD906A73340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TruckBackend.Tests", "TruckBackend.Tests\TruckBackend.Tests.csproj", "{FC86CB93-7D00-4AD6-83E0-EA92C98BA918}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{018F0A70-D8AB-4F94-B7E6-0CD906A73340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{018F0A70-D8AB-4F94-B7E6-0CD906A73340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{018F0A70-D8AB-4F94-B7E6-0CD906A73340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{018F0A70-D8AB-4F94-B7E6-0CD906A73340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC86CB93-7D00-4AD6-83E0-EA92C98BA918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC86CB93-7D00-4AD6-83E0-EA92C98BA918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC86CB93-7D00-4AD6-83E0-EA92C98BA918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC86CB93-7D00-4AD6-83E0-EA92C98BA918}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

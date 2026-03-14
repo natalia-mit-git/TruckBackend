@@ -6,8 +6,8 @@
 .env
 
 # Build results
-/obj
-/bin
+**/obj
+**/bin
 
 # Visual Studio cache/options directory
 .vscode/
