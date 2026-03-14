@@ -19,7 +19,7 @@ public class TruckController : ControllerBase
     [HttpGet("create")]
     public ActionResult<TruckLoad> CreateLoad(string destination)
     {
-        var load = _shippingService.CreateLoad(destination);
+        var load = _shippingService.CreateLoad(destination: destination);
         return Ok(load);
     }
 

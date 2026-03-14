@@ -6,11 +6,9 @@ public class ShippingService
 {
     private readonly Truck _truck = new Truck();
 
-    public TruckLoad CreateLoad(string destination)
+    public TruckLoad CreateLoad(int weight = TruckLoad.DefaultWeight, string destination = TruckLoad.DefaultDestination)
     {
-        var load = _truck.CreateNewTruckLoad();
-        load.Destination = destination;
-        return load;
+        return _truck.AddLoad(weight, destination);
     }
 
     public string ShipLoad(TruckLoad load)

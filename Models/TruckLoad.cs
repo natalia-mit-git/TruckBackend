@@ -3,12 +3,15 @@ namespace TruckBackend.Models;
 // Represents cargo (data + behavior)
 public class TruckLoad
 {
-    public int Weight { get; set; }
-    public string Destination { get; set; } = "Unknown";
+    public const int DefaultWeight = 1000;
+    public const string DefaultDestination = "Unknown";
+    public int Weight { get; private set; }
+    public string Destination { get; private set; }
 
-    public TruckLoad()
+    public TruckLoad(int weight, string destination)
     {
-        Weight = 1000;
+        Weight = weight;
+        Destination = destination;
     }
 
     // Virtual -> polymorphism possible later

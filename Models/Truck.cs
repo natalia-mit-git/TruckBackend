@@ -3,11 +3,24 @@ namespace TruckBackend.Models;
 // Represents the truck itself
 public class Truck
 {
-    public TruckLoad CreateNewTruckLoad()
+    private List<TruckLoad> _loads = new();
+
+    public TruckLoad AddLoad(int weight = TruckLoad.DefaultWeight, string destination = TruckLoad.DefaultDestination)
     {
-        return new TruckLoad();
+        var load = new TruckLoad(weight, destination);
+
+        if (GetTotalWeight() + weight > 10000)
+            throw new Exception("Truck overloaded");
+
+        _loads.Add(load);
+
+        return load;
     }
 
+    public int GetTotalWeight()
+    {
+        return _loads.Sum(l => l.Weight);
+    }
     public int CalcTotalWeight(int netWeight, int tareWeight)
     {
         return netWeight + tareWeight;
