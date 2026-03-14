@@ -2,7 +2,7 @@ namespace TruckBackend.Models;
 
 public class ExpressLoad : TruckLoad
 {
-    public ExpressLoad(int weight = 1000, string destination = "Unknown") : base(weight, destination) { }
+    public ExpressLoad(int weight = TruckLoad.DefaultWeight, string destination = TruckLoad.DefaultDestination) : base(weight, destination) { }
 
     public override string Ship()
     {
