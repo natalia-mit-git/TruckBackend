@@ -5,6 +5,11 @@ public class Truck
 {
     private List<TruckLoad> _loads = new();
 
+    public IReadOnlyList<TruckLoad> GetLoads()
+    {
+        return _loads.AsReadOnly();
+    }
+
     public TruckLoad AddLoad(int weight = TruckLoad.DefaultWeight, string destination = TruckLoad.DefaultDestination)
     {
         var load = new TruckLoad(weight, destination);
