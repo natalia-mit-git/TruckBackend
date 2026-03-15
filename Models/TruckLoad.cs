@@ -14,9 +14,9 @@ public class TruckLoad
         Destination = destination;
     }
 
-    // Virtual -> polymorphism possible later
+    // Default shipping behavior for standard loads
     public virtual string Ship()
     {
-        return $"Shipping standard load to {Destination}";
+        return $"Shipping standard load {Weight} kg to {Destination}";
     }
 }
