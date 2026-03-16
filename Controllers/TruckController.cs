@@ -15,19 +15,25 @@ public class TruckController : ControllerBase
         _shippingService = shippingService;
     }
 
-    // GET api/truck/create?destination=Berlin
-    [HttpGet("create")]
-    public ActionResult<TruckLoad> CreateLoad(string destination)
+    [HttpPost("create")]
+    public ActionResult<CreateLoadResponse> CreateLoad(CreateLoadRequest request)
     {
-        var load = _shippingService.CreateLoad(destination: destination);
-        return Ok(load);
+        var load = _shippingService.CreateLoad(request.Weight, request.Destination);
+
+        return Ok(new CreateLoadResponse(load.Weight, load.Destination));
     }
 
-    // POST api/truck/ship
     [HttpPost("ship")]
-    public ActionResult<string> ShipLoad([FromBody] TruckLoad load)
+    public ActionResult<string> ShipLoad(ShipLoadRequest request)
     {
-        var result = _shippingService.ShipLoad(load);
-        return Ok(result);
+        var load = new TruckLoad(request.Weight, request.Destination);
+
+        return Ok(_shippingService.ShipLoad(load));
     }
 }
+
+public record CreateLoadRequest(int Weight, string Destination);
+
+public record ShipLoadRequest(int Weight, string Destination);
+
+public record CreateLoadResponse(int Weight, string Destination);
