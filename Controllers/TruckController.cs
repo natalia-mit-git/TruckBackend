@@ -15,6 +15,12 @@ public class TruckController : ControllerBase
         _shippingService = shippingService;
     }
 
+    [HttpGet("loads")]
+    public ActionResult<List<TruckLoad>> GetLoads()
+    {
+        return Ok(_shippingService.GetLoads());
+    }
+
     [HttpPost("create")]
     public ActionResult<CreateLoadResponse> CreateLoad(CreateLoadRequest request)
     {
