@@ -3,8 +3,16 @@ name: .NET Tests
 on:
   push:
     branches: "main"
+    paths:
+      - '**/*.cs'
+      - '**/*.csproj'
+      - '.github/workflows/**'
   pull_request:
     branches: "main"
+    paths:
+      - '**/*.cs'
+      - '**/*.csproj'
+      - '.github/workflows/**'
 
 jobs:
   build-and-test:
