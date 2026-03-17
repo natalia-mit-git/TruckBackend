@@ -21,7 +21,7 @@ public class TruckTests
 
         truck.AddLoad(weight: 9000, destination: "Munich");
 
-        Assert.Throws<Exception>(() => truck.AddLoad(weight: 2000, destination: "Berlin"));
+        Assert.Throws<InvalidOperationException>(() => truck.AddLoad(weight: 2000, destination: "Berlin"));
     }
 
     [Fact]

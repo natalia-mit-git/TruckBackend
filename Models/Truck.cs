@@ -3,6 +3,7 @@ namespace TruckBackend.Models;
 // Represents the truck itself
 public class Truck
 {
+    private const int MaxCapacity = 10000;
     private List<TruckLoad> _loads = new();
 
     public IReadOnlyList<TruckLoad> GetLoads()
@@ -14,8 +15,8 @@ public class Truck
     {
         var load = new TruckLoad(weight, destination);
 
-        if (GetTotalWeight() + weight > 10000)
-            throw new Exception("Truck overloaded");
+        if (GetTotalWeight() + weight > MaxCapacity)
+            throw new InvalidOperationException("Truck overloaded");
 
         _loads.Add(load);
 
