@@ -1,6 +1,8 @@
-# TruckBackend API
+# TruckBackend
 
-Small REST API built with ASP.NET Core for managing truck loads.
+![Tests](https://github.com/natalia-mit-git/TruckBackend/actions/workflows/dotnet-tests.yml/badge.svg)
+
+Simple ASP.NET backend for truck load management.
 
 ## Features
 
