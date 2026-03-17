@@ -11,6 +11,11 @@ public class ShippingService
         return _truck.AddLoad(weight, destination);
     }
 
+    public IReadOnlyList<TruckLoad> GetLoads()
+    {
+        return _truck.GetLoads();
+    }
+
     public string ShipLoad(TruckLoad load)
     {
         return load.Ship();
