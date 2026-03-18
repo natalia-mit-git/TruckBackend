@@ -3,6 +3,10 @@ namespace TruckBackend.Models;
 // Represents the truck itself
 public class Truck
 {
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ICollection<TruckLoad> Loads { get; set; }
+
     private const int MaxCapacity = 10000;
     private List<TruckLoad> _loads = new();
 
