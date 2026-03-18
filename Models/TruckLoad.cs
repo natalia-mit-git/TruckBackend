@@ -5,8 +5,13 @@ public class TruckLoad
 {
     public const int DefaultWeight = 1000;
     public const string DefaultDestination = "Unknown";
-    public int Weight { get; private set; }
-    public string Destination { get; private set; }
+
+    public int Id { get; set; }
+    public int Weight { get; set; }
+    public string Destination { get; set; }
+
+    public int TruckId { get; set; }
+    public Truck Truck { get; set; }
 
     public TruckLoad(int weight, string destination)
     {
