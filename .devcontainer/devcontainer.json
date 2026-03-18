@@ -1,6 +1,9 @@
 {
-  "name": "C# (.NET) Dev Container",
-  "image": "mcr.microsoft.com/dotnet/sdk:8.0",
+  "name": "TruckBackend Dev",
+
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
 
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
@@ -12,12 +15,13 @@
   "mounts": [
     "source=${env:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
   ],
-  
+
   "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:/root/.dotnet/tools",
     "SSH_AUTH_SOCK": "/ssh-agent"
   },
 
-  "postCreateCommand": "apt-get update && apt-get install -y openssh-client && dotnet restore",
+  "postCreateCommand": "apt-get update && apt-get install -y openssh-client && dotnet restore && dotnet tool install --global dotnet-ef",
 
   "customizations": {
     "vscode": {
