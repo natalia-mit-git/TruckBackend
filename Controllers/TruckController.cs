@@ -16,25 +16,19 @@ public class TruckController : ControllerBase
     }
 
     [HttpGet("loads")]
-    public ActionResult<List<TruckLoad>> GetLoads()
+    public async Task<ActionResult<List<TruckLoad>>> GetLoads()
     {
-        return Ok(_shippingService.GetLoads());
+        return Ok(await _shippingService.GetLoads());
     }
 
-    [HttpPost("create")]
-    public ActionResult<CreateLoadResponse> CreateLoad(CreateLoadRequest request)
+    [HttpPost("trucks/{truckId}/loads")]
+    public async Task<ActionResult<CreateLoadResponse>> CreateLoad(
+         int truckId,
+         CreateLoadRequest request)
     {
-        var load = _shippingService.CreateLoad(request.Weight, request.Destination);
+        var load = await _shippingService.CreateLoad(truckId, request.Weight, request.Destination);
 
         return Ok(new CreateLoadResponse(load.Weight, load.Destination));
-    }
-
-    [HttpPost("ship")]
-    public ActionResult<string> ShipLoad(ShipLoadRequest request)
-    {
-        var load = new TruckLoad(request.Weight, request.Destination);
-
-        return Ok(_shippingService.ShipLoad(load));
     }
 }
 
