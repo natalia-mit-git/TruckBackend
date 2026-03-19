@@ -1,5 +1,7 @@
 using TruckBackend.Models;
 using Microsoft.EntityFrameworkCore;
+using TruckBackend.Contracts.Requests;
+using TruckBackend.Contracts.Responses;
 
 namespace TruckBackend.Services;
 
@@ -12,24 +14,37 @@ public class ShippingService
         _context = context;
     }
 
-    public async Task<TruckLoad> CreateLoad(int truckId, int weight, string destination)
+    public async Task<TruckLoadResponse> CreateLoad(int truckId, CreateTruckLoadRequest dto)
     {
         var truck = await _context.Trucks
             .Include(t => t.Loads)
             .FirstOrDefaultAsync(t => t.Id == truckId);
-        if (truck == null)
-        {
-            throw new InvalidOperationException("Truck not found");
-        }
 
-        var load = truck.AddLoad(weight, destination);
+        if (truck == null)
+            throw new InvalidOperationException("Truck not found");
+
+        var load = truck.AddLoad(dto.Weight, dto.Destination);
 
         await _context.SaveChangesAsync();
 
-        return load;
+        return new TruckLoadResponse
+        {
+            Id = load.Id,
+            Weight = load.Weight,
+            Destination = load.Destination
+        };
     }
-    public async Task<List<TruckLoad>> GetLoads()
+
+    public async Task<List<TruckLoadResponse>> GetLoads()
     {
-        return await _context.TruckLoads.ToListAsync();
+        return await _context.TruckLoads
+            .Select(l => new TruckLoadResponse
+            {
+                Id = l.Id,
+                Weight = l.Weight,
+                Destination = l.Destination
+            })
+            .ToListAsync();
     }
+
 }
