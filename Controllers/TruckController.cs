@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using TruckBackend.Models;
 using TruckBackend.Services;
+using TruckBackend.Contracts.Requests;
+using TruckBackend.Contracts.Responses;
 
 namespace TruckBackend.Controllers;
 
@@ -16,24 +17,17 @@ public class TruckController : ControllerBase
     }
 
     [HttpGet("loads")]
-    public async Task<ActionResult<List<TruckLoad>>> GetLoads()
+    public async Task<ActionResult<List<TruckLoadResponse>>> GetLoads()
     {
         return Ok(await _shippingService.GetLoads());
     }
 
     [HttpPost("trucks/{truckId}/loads")]
-    public async Task<ActionResult<CreateLoadResponse>> CreateLoad(
-         int truckId,
-         CreateLoadRequest request)
+    public async Task<ActionResult<TruckLoadResponse>> CreateLoad(
+        int truckId,
+        CreateTruckLoadRequest request)
     {
-        var load = await _shippingService.CreateLoad(truckId, request.Weight, request.Destination);
-
-        return Ok(new CreateLoadResponse(load.Weight, load.Destination));
+        var load = await _shippingService.CreateLoad(truckId, request);
+        return Ok(load);
     }
 }
-
-public record CreateLoadRequest(int Weight, string Destination);
-
-public record ShipLoadRequest(int Weight, string Destination);
-
-public record CreateLoadResponse(int Weight, string Destination);
