@@ -1,23 +1,35 @@
 using TruckBackend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TruckBackend.Services;
 
 public class ShippingService
 {
-    private readonly Truck _truck = new Truck();
+    private readonly TruckContext _context;
 
-    public TruckLoad CreateLoad(int weight = TruckLoad.DefaultWeight, string destination = TruckLoad.DefaultDestination)
+    public ShippingService(TruckContext context)
     {
-        return _truck.AddLoad(weight, destination);
+        _context = context;
     }
 
-    public IReadOnlyList<TruckLoad> GetLoads()
+    public async Task<TruckLoad> CreateLoad(int truckId, int weight, string destination)
     {
-        return _truck.GetLoads();
-    }
+        var truck = await _context.Trucks
+            .Include(t => t.Loads)
+            .FirstOrDefaultAsync(t => t.Id == truckId);
+        if (truck == null)
+        {
+            throw new InvalidOperationException("Truck not found");
+        }
 
-    public string ShipLoad(TruckLoad load)
+        var load = truck.AddLoad(weight, destination);
+
+        await _context.SaveChangesAsync();
+
+        return load;
+    }
+    public async Task<List<TruckLoad>> GetLoads()
     {
-        return load.Ship();
+        return await _context.TruckLoads.ToListAsync();
     }
 }
