@@ -11,7 +11,7 @@ public class TruckLoad
     public string Destination { get; set; }
 
     public int TruckId { get; set; }
-    public Truck Truck { get; set; }
+    public Truck? Truck { get; set; }
 
     public TruckLoad(int weight, string destination)
     {
