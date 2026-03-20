@@ -21,11 +21,13 @@ Simple ASP.NET backend for truck load management.
 ## Endpoints
 
 API documentation and testing available via Swagger UI when running the project.
+- Swagger UI: http://localhost:5000/swagger
 
-## Run the project
-
+## Run the project and start all services (PostgreSQL + Adminer):
+```bash
 dotnet build  
 dotnet run  
+```
 
 ## Run tests
 
