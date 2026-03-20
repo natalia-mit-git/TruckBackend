@@ -8,28 +8,22 @@ public class Truck
     public ICollection<TruckLoad> Loads { get; set; } = new List<TruckLoad>();
 
     private const int MaxCapacity = 10000;
-    private List<TruckLoad> _loads = new();
-
-    public IReadOnlyList<TruckLoad> GetLoads()
-    {
-        return _loads.AsReadOnly();
-    }
 
     public TruckLoad AddLoad(int weight = TruckLoad.DefaultWeight, string destination = TruckLoad.DefaultDestination)
     {
-        var load = new TruckLoad(weight, destination);
-
         if (GetTotalWeight() + weight > MaxCapacity)
             throw new InvalidOperationException("Truck overloaded");
 
-        _loads.Add(load);
+        var load = new TruckLoad(weight, destination);
+
+        Loads.Add(load);
 
         return load;
     }
 
     public int GetTotalWeight()
     {
-        return _loads.Sum(l => l.Weight);
+        return Loads.Sum(l => l.Weight);
     }
     public int CalcTotalWeight(int netWeight, int tareWeight)
     {
