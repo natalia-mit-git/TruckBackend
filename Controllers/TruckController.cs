@@ -27,7 +27,18 @@ public class TruckController : ControllerBase
         int truckId,
         CreateTruckLoadRequest request)
     {
-        var load = await _shippingService.CreateLoad(truckId, request);
-        return Ok(load);
+        try
+        {
+            var load = await _shippingService.CreateLoad(truckId, request);
+            return Ok(load);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
