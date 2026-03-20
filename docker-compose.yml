@@ -7,6 +7,10 @@ services:
       - .:/workspace
     working_dir: /workspace
     command: sleep infinity
+    ports:
+    - "5000:5000"
+    environment:
+    - ASPNETCORE_URLS=http://0.0.0.0:5000
     depends_on:
       - postgres
 
@@ -19,4 +23,9 @@ services:
       POSTGRES_DB: truckdb
     ports:
       - "5432:5432"
-  
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
