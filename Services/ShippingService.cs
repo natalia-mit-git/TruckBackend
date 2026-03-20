@@ -21,9 +21,10 @@ public class ShippingService
             .FirstOrDefaultAsync(t => t.Id == truckId);
 
         if (truck == null)
-            throw new InvalidOperationException("Truck not found");
+            throw new KeyNotFoundException($"Truck with id {truckId} not found");
 
         var load = truck.AddLoad(dto.Weight, dto.Destination);
+        Console.WriteLine($"TruckId in load: {load.TruckId}");
 
         await _context.SaveChangesAsync();
 
