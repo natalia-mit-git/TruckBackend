@@ -16,10 +16,16 @@ public class TruckController : ControllerBase
         _shippingService = shippingService;
     }
 
-    [HttpGet("loads")]
-    public async Task<ActionResult<List<TruckLoadResponse>>> GetLoads()
+    [HttpGet("all_loads")]
+    public async Task<ActionResult<List<TruckLoadResponse>>> GetAllLoads()
     {
-        return Ok(await _shippingService.GetLoads());
+        return Ok(await _shippingService.GetAllLoads());
+    }
+
+    [HttpGet("{truckId}/loads")]
+    public async Task<ActionResult<List<TruckLoadResponse>>> GetLoads(int truckId)
+    {
+        return Ok(await _shippingService.GetLoads(truckId));
     }
 
     [HttpPost("trucks/{truckId}/loads")]

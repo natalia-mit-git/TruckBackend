@@ -13,8 +13,9 @@ public class TruckLoad
     public int TruckId { get; set; }
     public Truck? Truck { get; set; }
 
-    public TruckLoad(int weight, string destination)
+    public TruckLoad(int truckId, int weight, string destination)
     {
+        TruckId = truckId;
         Weight = weight;
         Destination = destination;
     }
@@ -22,6 +23,6 @@ public class TruckLoad
     // Default shipping behavior for standard loads
     public virtual string Ship()
     {
-        return $"Shipping standard load {Weight} kg to {Destination}";
+        return $"Shipping standard load {Weight} kg to {Destination} by truck {TruckId}";
     }
 }

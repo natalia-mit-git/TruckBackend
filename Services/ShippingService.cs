@@ -36,14 +36,28 @@ public class ShippingService
         };
     }
 
-    public async Task<List<TruckLoadResponse>> GetLoads()
+    public async Task<List<TruckLoadResponse>> GetLoads(int truckId)
+    {
+        return await _context.TruckLoads
+            .Where(l => l.TruckId == truckId)
+            .Select(l => new TruckLoadResponse
+            {
+                Id = l.Id,
+                Weight = l.Weight,
+                Destination = l.Destination,
+                TruckId = l.TruckId
+            })
+            .ToListAsync();
+    }
+    public async Task<List<TruckLoadResponse>> GetAllLoads()
     {
         return await _context.TruckLoads
             .Select(l => new TruckLoadResponse
             {
                 Id = l.Id,
                 Weight = l.Weight,
-                Destination = l.Destination
+                Destination = l.Destination,
+                TruckId = l.TruckId
             })
             .ToListAsync();
     }
