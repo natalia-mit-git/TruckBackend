@@ -30,7 +30,7 @@ A RESTful backend service for truck and load management built with .NET 8 and Po
 ```bash
 docker-compose up --build
 ```
-1.Access the API documentation at: http://localhost:5000/swagger
+1. Access the API documentation at: http://localhost:5000/swagger
 
 ### Manual Setup
 1. Update the connection string in `appsettings.json`.
