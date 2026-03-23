@@ -24,7 +24,6 @@ public class ShippingService
             throw new KeyNotFoundException($"Truck with id {truckId} not found");
 
         var load = truck.AddLoad(dto.Weight, dto.Destination);
-        Console.WriteLine($"TruckId in load: {load.TruckId}");
 
         await _context.SaveChangesAsync();
 
@@ -32,7 +31,8 @@ public class ShippingService
         {
             Id = load.Id,
             Weight = load.Weight,
-            Destination = load.Destination
+            Destination = load.Destination,
+            TruckId = truckId
         };
     }
 
