@@ -28,15 +28,20 @@ public class TruckTests
     public void GetLoads_Should_Return_All_Loads()
     {
         var truck = new Truck();
-
         truck.AddLoad(weight: 1000, destination: "Munich");
         truck.AddLoad(weight: 2000, destination: "Berlin");
 
-        var loads = truck.GetLoads();
+        var loads = truck.Loads;
 
         Assert.Equal(2, loads.Count);
-        Assert.Equal("Munich", loads[0].Destination);
-        Assert.Equal("Berlin", loads[1].Destination);
+
+        var munichLoad = loads.SingleOrDefault(l => l.Destination == "Munich");
+        Assert.NotNull(munichLoad);
+        Assert.Equal(1000, munichLoad.Weight);
+
+        var berlinLoad = loads.SingleOrDefault(l => l.Destination == "Berlin");
+        Assert.NotNull(berlinLoad);
+        Assert.Equal(2000, berlinLoad.Weight);
     }
 
     [Fact]

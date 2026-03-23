@@ -1,45 +1,110 @@
 using Microsoft.AspNetCore.Mvc;
-using TruckBackend.Models;
 using TruckBackend.Services;
+using TruckBackend.Contracts.Requests;
+using TruckBackend.Contracts.Responses;
 
 namespace TruckBackend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/trucks")]
 public class TruckController : ControllerBase
 {
     private readonly ShippingService _shippingService;
-
-    public TruckController(ShippingService shippingService)
+    private readonly TruckService _truckService;
+    public TruckController(ShippingService shippingService, TruckService truckService)
     {
         _shippingService = shippingService;
+        _truckService = truckService;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<TruckResponse>>> GetAllTrucks()
+    {
+        return Ok(await _truckService.GetAllTrucks());
+    }
+
+    [HttpGet("{truckId}")]
+    public async Task<ActionResult<List<TruckResponse>>> GetTruck(int truckId)
+    {
+        var truck = await _truckService.GetTruck(truckId);
+        if (truck == null)
+            return NotFound();
+        return Ok(truck);
     }
 
     [HttpGet("loads")]
-    public ActionResult<List<TruckLoad>> GetLoads()
+    public async Task<ActionResult<List<TruckLoadResponse>>> GetAllLoads()
     {
-        return Ok(_shippingService.GetLoads());
+        return Ok(await _shippingService.GetAllLoads());
     }
 
-    [HttpPost("create")]
-    public ActionResult<CreateLoadResponse> CreateLoad(CreateLoadRequest request)
+    [HttpGet("{truckId}/loads")]
+    public async Task<ActionResult<List<TruckLoadResponse>>> GetLoads(int truckId)
     {
-        var load = _shippingService.CreateLoad(request.Weight, request.Destination);
-
-        return Ok(new CreateLoadResponse(load.Weight, load.Destination));
+        return Ok(await _shippingService.GetLoads(truckId));
     }
 
-    [HttpPost("ship")]
-    public ActionResult<string> ShipLoad(ShipLoadRequest request)
+    [HttpPost]
+    public async Task<ActionResult<TruckResponse>> CreateTruck(CreateTruckRequest request)
     {
-        var load = new TruckLoad(request.Weight, request.Destination);
+        try
+        {
+            var truck = await _truckService.CreateTruck(request);
+            return Ok(truck);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
 
-        return Ok(_shippingService.ShipLoad(load));
+    }
+
+    [HttpPut("{truckId}")]
+    public async Task<ActionResult<TruckResponse>> UpdateTruck(int truckId, CreateTruckRequest request)
+    {
+        try
+        {
+            var truck = await _truckService.UpdateTruck(truckId, request);
+            return Ok(truck);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+    [HttpDelete("{truckId}")]
+    public async Task<ActionResult> DeleteTruck(int truckId)
+    {
+        try
+        {
+            await _truckService.DeleteTruck(truckId);
+            return Ok();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("{truckId}/loads")]
+    public async Task<ActionResult<TruckLoadResponse>> CreateLoad(
+        int truckId,
+        CreateTruckLoadRequest request)
+    {
+        try
+        {
+            var load = await _shippingService.CreateLoad(truckId, request);
+            return Ok(load);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
-
-public record CreateLoadRequest(int Weight, string Destination);
-
-public record ShipLoadRequest(int Weight, string Destination);
-
-public record CreateLoadResponse(int Weight, string Destination);

@@ -5,11 +5,17 @@ public class TruckLoad
 {
     public const int DefaultWeight = 1000;
     public const string DefaultDestination = "Unknown";
-    public int Weight { get; private set; }
-    public string Destination { get; private set; }
 
-    public TruckLoad(int weight, string destination)
+    public int Id { get; set; }
+    public int Weight { get; set; }
+    public string Destination { get; set; }
+
+    public int TruckId { get; set; }
+    public Truck? Truck { get; set; }
+
+    public TruckLoad(int truckId, int weight, string destination)
     {
+        TruckId = truckId;
         Weight = weight;
         Destination = destination;
     }
@@ -17,6 +23,6 @@ public class TruckLoad
     // Default shipping behavior for standard loads
     public virtual string Ship()
     {
-        return $"Shipping standard load {Weight} kg to {Destination}";
+        return $"Shipping standard load {Weight} kg to {Destination} by truck {TruckId}";
     }
 }

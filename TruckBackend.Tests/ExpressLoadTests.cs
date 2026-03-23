@@ -6,7 +6,7 @@ public class ExpressLoadTests
     [Fact]
     public void Constructor_Should_Set_Default_Weight()
     {
-        var load = new ExpressLoad(ExpressLoad.DefaultWeight, "Berlin");
+        var load = new ExpressLoad(1, ExpressLoad.DefaultWeight, "Berlin");
 
         Assert.Equal(TruckLoad.DefaultWeight, load.Weight);
         Assert.Equal("Berlin", load.Destination);
@@ -15,10 +15,10 @@ public class ExpressLoadTests
     [Fact]
     public void Ship_Should_Return_Standard_Message()
     {
-        var load = new ExpressLoad(300, "Berlin");
+        var load = new ExpressLoad(1, 300, "Berlin");
 
         var result = load.Ship();
 
-        Assert.Equal("Express shipping 300 kg to Berlin", result);
+        Assert.Equal("Express shipping 300 kg to Berlin by truck 1", result);
     }
 }
