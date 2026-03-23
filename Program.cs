@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ShippingService>();
+builder.Services.AddScoped<TruckService>();
 builder.Services.AddDbContext<TruckContext>(options =>
     options.UseNpgsql(connectionString));
 

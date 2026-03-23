@@ -6,17 +6,33 @@ using TruckBackend.Contracts.Responses;
 namespace TruckBackend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/trucks")]
 public class TruckController : ControllerBase
 {
     private readonly ShippingService _shippingService;
-
-    public TruckController(ShippingService shippingService)
+    private readonly TruckService _truckService;
+    public TruckController(ShippingService shippingService, TruckService truckService)
     {
         _shippingService = shippingService;
+        _truckService = truckService;
     }
 
-    [HttpGet("all_loads")]
+    [HttpGet]
+    public async Task<ActionResult<List<TruckResponse>>> GetAllTrucks()
+    {
+        return Ok(await _truckService.GetAllTrucks());
+    }
+
+    [HttpGet("{truckId}")]
+    public async Task<ActionResult<List<TruckResponse>>> GetTruck(int truckId)
+    {
+        var truck = await _truckService.GetTruck(truckId);
+        if (truck == null)
+            return NotFound();
+        return Ok(truck);
+    }
+
+    [HttpGet("loads")]
     public async Task<ActionResult<List<TruckLoadResponse>>> GetAllLoads()
     {
         return Ok(await _shippingService.GetAllLoads());
@@ -28,7 +44,51 @@ public class TruckController : ControllerBase
         return Ok(await _shippingService.GetLoads(truckId));
     }
 
-    [HttpPost("trucks/{truckId}/loads")]
+    [HttpPost]
+    public async Task<ActionResult<TruckResponse>> CreateTruck(CreateTruckRequest request)
+    {
+        try
+        {
+            var truck = await _truckService.CreateTruck(request);
+            return Ok(truck);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+    [HttpPut("{truckId}")]
+    public async Task<ActionResult<TruckResponse>> UpdateTruck(int truckId, CreateTruckRequest request)
+    {
+        try
+        {
+            var truck = await _truckService.UpdateTruck(truckId, request);
+            return Ok(truck);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+    [HttpDelete("{truckId}")]
+    public async Task<ActionResult> DeleteTruck(int truckId)
+    {
+        try
+        {
+            await _truckService.DeleteTruck(truckId);
+            return Ok();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("{truckId}/loads")]
     public async Task<ActionResult<TruckLoadResponse>> CreateLoad(
         int truckId,
         CreateTruckLoadRequest request)
