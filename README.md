@@ -27,23 +27,23 @@ A RESTful backend service for truck and load management built with .NET 8 and Po
 ### Using Docker
 1. Clone the repository.
 1. Run the following command in the root directory:
-```bash
-docker-compose up --build
-```
+    ```bash
+    docker-compose up --build
+    ```
 1. Access the API documentation at: http://localhost:5000/swagger
 
 ### Manual Setup
 1. Update the connection string in `appsettings.json`.
 1. Apply database migrations:
-```bash
-dotnet ef database update
-```
+    ```bash
+    dotnet ef database update
+    ```
 1. Run the application:
-```bash
-dotnet run
-```
+    ```bash
+    dotnet run
+    ```
 ### Testing
 Execute the test suite using the .NET CLI:
-```bash
-dotnet test
-```
+    ```bash
+    dotnet test
+    ```
