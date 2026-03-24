@@ -2,22 +2,27 @@
 
 ![Tests](https://github.com/natalia-mit-git/TruckBackend/actions/workflows/dotnet-tests.yml/badge.svg)
 
-A RESTful backend service for truck and load management built with .NET 8 and PostgreSQL. This project demonstrates a structured approach to building web APIs with a focus on maintainability and data integrity.
+A RESTful backend service for managing trucks and their loads, built with .NET 8 and PostgreSQL.
 
 ## Features
 
-- Create Trucks and their associated Loads via CRUD operations
-- Relational Data Storage: Persistent storage using PostgreSQL with Entity Framework Core
-- Containerized Environment: Full setup for application and database using Docker Compose
-- Unit and integration tests
-- CI: GitHub Actions for automated testing and release
+- CRUD operations for trucks and their loads via REST API
+- Persistent data storage using PostgreSQL and Entity Framework Core
+- Layered architecture (Controller → Service → Data Access)
+- Setup for application and database using Docker Compose
+- Consistent development environment using DevContainer
+- Automated tests using xUnit and EF Core InMemory provider
+- CI pipeline using GitHub Actions
+- API documentation via Swagger (OpenAPI)
+- Database inspection via Adminer
 
 ## Tech Stack
 
 - Runtime: .NET 8 (C#)
 - ORM: Entity Framework Core
 - Database: PostgreSQL
-- Infrastructure: Docker, Docker Compose
+- Database tool: Adminer
+- Infrastructure: Docker, Docker Compose, DevContainer
 - Testing: xUnit
 - API Documentation: Swagger (OpenAPI)
 - CI: GitHub Actions
@@ -28,7 +33,7 @@ A RESTful backend service for truck and load management built with .NET 8 and Po
 1. Clone the repository.
 1. Run the following command in the root directory:
     ```bash
-    docker-compose up --build
+    docker compose up --build
     ```
 1. Access the API documentation at: http://localhost:5000/swagger
 
@@ -42,8 +47,17 @@ A RESTful backend service for truck and load management built with .NET 8 and Po
     ```bash
     dotnet run
     ```
+
 ### Testing
 Execute the test suite using the .NET CLI:
     ```bash
     dotnet test
     ```
+
+### Database (Adminer)
+- URL: http://localhost:8080
+- System: PostgreSQL
+- Server: postgres
+- User: postgres
+- Password: postgres
+- Database: truckdb
