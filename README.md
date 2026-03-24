@@ -49,10 +49,11 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
     ```
 
 ### Testing
-Execute the test suite using the .NET CLI:
+Run locally:
     ```bash
     dotnet test
     ```
+Tests are also executed automatically via GitHub Actions.
 
 ### Database (Adminer)
 - URL: http://localhost:8080
