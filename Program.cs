@@ -18,7 +18,23 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TruckContext>();
-    db.Database.Migrate();
+
+    var retries = 10;
+    while (retries > 0)
+    {
+        try
+        {
+            db.Database.Migrate();
+            Console.WriteLine("Database migration successful");
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Migration failed: {ex.Message}");
+            retries--;
+            Thread.Sleep(3000);
+        }
+    }
 }
 
 app.UseSwagger();
