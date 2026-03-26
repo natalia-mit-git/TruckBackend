@@ -31,34 +31,21 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
 
 ### Using Docker
 1. Clone the repository.
-1. Run the following command in the root directory:
+1. Run the following command in the root directory to start the app and database:
     ```bash
     docker compose up --build
     ```
 1. Access the API documentation at: http://localhost:5000/swagger
-
-### Manual Setup
-1. Update the connection string in `appsettings.json`.
-1. Apply database migrations:
-    ```bash
-    dotnet ef database update
-    ```
-1. Run the application:
-    ```bash
-    dotnet run
-    ```
-
-### Testing
-Run locally:
-    ```bash
-    dotnet test
-    ```
-Tests are also executed automatically via GitHub Actions.
-
-### Database (Adminer)
-- URL: http://localhost:8080
+1. Inspect the database via Adminer at http://localhost:8080
 - System: PostgreSQL
 - Server: postgres
 - User: postgres
 - Password: postgres
 - Database: truckdb
+
+### Testing
+- Tests are executed automatically via GitHub Actions
+- Local tests can be run after stopping any running containers (optional):
+    ```bash
+    dotnet test
+    ```
