@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Default");
+Console.WriteLine($"ConnectionString: {connectionString}");
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -14,34 +15,37 @@ builder.Services.AddDbContext<TruckContext>(options =>
     options.UseNpgsql(connectionString));
 
 var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
+if (!builder.Environment.IsDevelopment())
 {
-    var db = scope.ServiceProvider.GetRequiredService<TruckContext>();
-
-    var retries = 10;
-    while (retries > 0)
+    using (var scope = app.Services.CreateScope())
     {
-        try
+        var db = scope.ServiceProvider.GetRequiredService<TruckContext>();
+
+        var retries = 10;
+        while (retries > 0)
         {
-            db.Database.Migrate();
-            Console.WriteLine("Database migration successful");
-            break;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Migration failed: {ex.Message}");
-            retries--;
-            Thread.Sleep(3000);
+            try
+            {
+                db.Database.Migrate();
+                Console.WriteLine("Database migration successful");
+                break;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Migration failed: {ex.Message}");
+                retries--;
+                Thread.Sleep(3000);
+            }
         }
     }
 }
+
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapControllers();
 app.MapGet("/", () => "API is running");
-
+Console.WriteLine($"ENV: {builder.Environment.EnvironmentName}");
 app.Run();
 
