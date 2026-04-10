@@ -3,7 +3,7 @@ using TruckBackend.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = "Host=postgres;Database=truckdb;Username=postgres;Password=postgres";
+var connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
