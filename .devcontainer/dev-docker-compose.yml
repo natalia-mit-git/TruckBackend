@@ -1,17 +1,29 @@
 version: '3.8'
 
 services:
+
   app:
-    image: mcr.microsoft.com/devcontainers/dotnet:8.0
-    command: sleep infinity
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+    volumes:
+      - ..:/workspaces/TruckBackend
+
+    working_dir: /workspaces/TruckBackend
     ports:
     - "5000:5000"
+    
     environment:
-    - ASPNETCORE_URLS=http://0.0.0.0:5000
-    - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Port=5432;Database=truckdb;Username=postgres;Password=postgres
+    
     depends_on:
       - postgres
 
+    command: sleep infinity
+    
   postgres:
     image: postgres:15
     restart: always

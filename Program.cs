@@ -15,31 +15,28 @@ builder.Services.AddDbContext<TruckContext>(options =>
     options.UseNpgsql(connectionString));
 
 var app = builder.Build();
-if (!builder.Environment.IsDevelopment())
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<TruckContext>();
 
-        var retries = 10;
-        while (retries > 0)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TruckContext>();
+
+    var retries = 10;
+    while (retries > 0)
+    {
+        try
         {
-            try
-            {
-                db.Database.Migrate();
-                Console.WriteLine("Database migration successful");
-                break;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Migration failed: {ex.Message}");
-                retries--;
-                Thread.Sleep(3000);
-            }
+            db.Database.Migrate();
+            Console.WriteLine("Database migration successful");
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Migration failed: {ex.Message}");
+            retries--;
+            Thread.Sleep(3000);
         }
     }
 }
-
 
 app.UseSwagger();
 app.UseSwaggerUI();
