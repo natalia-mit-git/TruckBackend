@@ -1,7 +1,9 @@
 {
   "name": "TruckBackend Dev",
 
-  "image": "mcr.microsoft.com/devcontainers/dotnet:8.0",
+  "dockerComposeFile": "dev-docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
 
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
@@ -19,7 +21,6 @@
     "SSH_AUTH_SOCK": "/ssh-agent"
   },
 
-  // "postCreateCommand": "apt-get update && apt-get install -y openssh-client && dotnet restore && dotnet tool install --global dotnet-ef",
   "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openssh-client && dotnet restore && dotnet tool install --global dotnet-ef",
 
   "customizations": {
