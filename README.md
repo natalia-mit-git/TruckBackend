@@ -9,7 +9,7 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
 - CRUD operations for trucks and their loads via REST API
 - Persistent data storage using PostgreSQL and Entity Framework Core
 - Layered architecture (Controller → Service → Data Access)
-- Setup for application and database using Docker Compose
+- Docker Compose setup for development and production environments
 - Consistent development environment using DevContainer
 - Automated tests using xUnit and EF Core InMemory provider
 - CI pipeline using GitHub Actions
@@ -29,12 +29,26 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
 
 ## Getting Started
 
-### Using Docker
-1. Clone the repository.
+### Development
+1. Clone the repository
+1. Open the project in VS Code and select:
+    ```bash
+    Reopen in Container
+    ```
+1. Run the application inside the container:
+    ```bash
+    dotnet watch run
+    ```
+
+### Production
+1. Clone the repository
 1. Run the following command in the root directory to start the app and database:
     ```bash
     docker compose up --build
     ```
+
+### Access 
+Available in both development and production modes.
 1. Access the API documentation at: http://localhost:5000/swagger
 1. Inspect the database via Adminer at http://localhost:8080
 - System: PostgreSQL
@@ -45,7 +59,7 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
 
 ### Testing
 - Tests are executed automatically via GitHub Actions
-- Local tests can be run after stopping any running containers (optional):
+- Run locally :
     ```bash
     dotnet test
     ```
