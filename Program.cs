@@ -37,7 +37,7 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -45,4 +45,3 @@ app.MapControllers();
 app.MapGet("/", () => "API is running");
 Console.WriteLine($"ENV: {builder.Environment.EnvironmentName}");
 app.Run();
-
