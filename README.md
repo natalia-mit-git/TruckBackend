@@ -29,26 +29,30 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
 
 ## Getting Started
 
-### Development
+### Run with Docker (Recommended)
 1. Clone the repository
+1. Start the application and database:
+    ```bash
+    docker compose up --build
+    ```
+
+### Development (DevContainer)
+1. Clone the repository
+1. Create a `.env` file inside the `.devcontainer` folder or set the environment variables:
+    ```bash
+    POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
+    ```
 1. Open the project in VS Code and select:
     ```bash
-    Reopen in Container
+    Dev Containers: Rebuild Container
     ```
 1. Run the application inside the container:
     ```bash
     dotnet watch run
     ```
 
-### Production
-1. Clone the repository
-1. Run the following command in the root directory to start the app and database:
-    ```bash
-    docker compose up --build
-    ```
-
 ### Access 
-Available in both development and production modes.
+Available in both docker and development modes.
 1. Access the API documentation at: http://localhost:5000/swagger
 1. Inspect the database via Adminer at http://localhost:8080
 - System: PostgreSQL
