@@ -42,6 +42,7 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
     ```bash
     POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
     ```
+    The values should match the PostgreSQL credentials shown in the [Access](#access) section below.
 1. Open the project in VS Code and select:
     ```bash
     Dev Containers: Rebuild Container
@@ -51,7 +52,7 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
     dotnet watch run
     ```
 
-### Access 
+### Access
 Available in both docker and development modes.
 1. Access the API documentation at: http://localhost:5000/swagger
 1. Inspect the database via Adminer at http://localhost:8080
