@@ -25,16 +25,19 @@ public class TruckService
             })
             .ToListAsync();
     }
-    public async Task<List<TruckResponse>> GetTruck(int truckId)
+    public async Task<TruckResponse> GetTruck(int truckId)
     {
-        return await _context.Trucks
-            .Where(t => t.Id == truckId)
-            .Select(t => new TruckResponse
-            {
-                Id = t.Id,
-                Name = t.Name
-            })
-            .ToListAsync();
+        var truck = await _context.Trucks
+        .Select(t => new TruckResponse
+        {
+            Id = t.Id,
+            Name = t.Name
+        })
+        .FirstOrDefaultAsync(t => t.Id == truckId);
+
+        if (truck == null)
+            throw new TruckNotFoundException(truckId);
+        return truck;
     }
 
     public async Task<TruckResponse> CreateTruck(CreateTruckRequest dto)
