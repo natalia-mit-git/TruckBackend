@@ -24,11 +24,9 @@ public class TruckController : ControllerBase
     }
 
     [HttpGet("{truckId}")]
-    public async Task<ActionResult<List<TruckResponse>>> GetTruck(int truckId)
+    public async Task<ActionResult<TruckResponse>> GetTruck(int truckId)
     {
         var truck = await _truckService.GetTruck(truckId);
-        if (truck == null)
-            return NotFound();
         return Ok(truck);
     }
 
