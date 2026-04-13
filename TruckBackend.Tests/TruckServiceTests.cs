@@ -2,6 +2,7 @@ using TruckBackend.Services;
 using TruckBackend.Contracts.Requests;
 using Microsoft.EntityFrameworkCore;
 using TruckBackend.Models;
+using TruckBackend.Models.Exceptions;
 
 using Xunit;
 
@@ -52,9 +53,10 @@ public class TruckServiceTests
 
             await service.DeleteTruck(createdTruck.Id);
 
-            var deletedTruck = await service.GetTruck(createdTruck.Id);
-
-            Assert.Empty(deletedTruck);
+            await Assert.ThrowsAsync<TruckNotFoundException>(async () =>
+            {
+                await service.GetTruck(createdTruck.Id);
+            });
         }
     }
 }
