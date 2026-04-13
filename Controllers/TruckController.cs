@@ -6,7 +6,7 @@ using TruckBackend.Contracts.Responses;
 namespace TruckBackend.Controllers;
 
 [ApiController]
-[Route("api/trucks")]
+[Route("api/truck")]
 public class TruckController : ControllerBase
 {
     private readonly ShippingService _shippingService;
