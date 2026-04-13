@@ -37,11 +37,15 @@ public class ExceptionHandlingMiddleware
 
         response.StatusCode = statusCode;
 
-        var result = new
+        var responseObj = new
         {
-            error = ex.Message
+            message = ex is TruckNotFoundException ex1
+                ? ex1.UserMessage
+                : "An error occurred",
+
+            details = ex.Message
         };
 
-        return response.WriteAsJsonAsync(result.error);
+        return response.WriteAsJsonAsync(responseObj);
     }
 }

@@ -2,6 +2,7 @@ using TruckBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using TruckBackend.Contracts.Requests;
 using TruckBackend.Contracts.Responses;
+using TruckBackend.Models.Exceptions;
 
 namespace TruckBackend.Services;
 
@@ -56,7 +57,7 @@ public class TruckService
     {
         var truck = await _context.Trucks.FindAsync(truckId);
         if (truck == null)
-            throw new InvalidOperationException($"Truck with ID {truckId} not found");
+            throw new TruckNotFoundException(truckId);
 
         truck.Name = dto.Name;
         await _context.SaveChangesAsync();
@@ -72,7 +73,7 @@ public class TruckService
     {
         var truck = await _context.Trucks.FindAsync(truckId);
         if (truck == null)
-            throw new InvalidOperationException($"Truck with ID {truckId} not found");
+            throw new TruckNotFoundException(truckId);
 
         _context.Trucks.Remove(truck);
         await _context.SaveChangesAsync();
