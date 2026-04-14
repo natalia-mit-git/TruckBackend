@@ -8,55 +8,79 @@ using Xunit;
 
 public class TruckServiceTests
 {
-    [Fact]
-    public async Task CreateTruck_Should_Return_Created_Truck()
+    private static TruckService CreateTruckService()
     {
         var options = new DbContextOptionsBuilder<TruckContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
-        using (var context = new TruckContext(options))
+        return new TruckService(new TruckContext(options));
+    }
+
+    [Fact]
+    public async Task CreateTruck_Should_Return_Created_Truck()
+    {
+        var service = CreateTruckService();
+        var request = new CreateTruckRequest
         {
-            var service = new TruckService(context);
+            Name = "Test Truck"
+        };
 
-            var request = new CreateTruckRequest
-            {
-                Name = "Test Truck"
-            };
+        var result = await service.CreateTruck(request);
 
-            var result = await service.CreateTruck(request);
-
-            Assert.NotNull(result);
-            Assert.Equal("Test Truck", result.Name);
-            Assert.True(result.Id > 0);
-        }
+        Assert.NotNull(result);
+        Assert.Equal("Test Truck", result.Name);
+        Assert.True(result.Id > 0);
     }
 
     [Fact]
     public async Task DeleteTruck_Should_Remove_Truck()
     {
-        var options = new DbContextOptionsBuilder<TruckContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-
-        using (var context = new TruckContext(options))
+        var service = CreateTruckService();
+        var request = new CreateTruckRequest
         {
-            var service = new TruckService(context);
+            Name = "Test Truck"
+        };
 
-            var request = new CreateTruckRequest
-            {
-                Name = "Test Truck"
-            };
+        var createdTruck = await service.CreateTruck(request);
+        Console.WriteLine("Creating truck for deleteing  with name: " + createdTruck.Name + " and got id: " + createdTruck.Id);
 
-            var createdTruck = await service.CreateTruck(request);
-            Console.WriteLine("Creating truck for deleteing  with name: " + createdTruck.Name + " and got id: " + createdTruck.Id);
+        await service.DeleteTruck(createdTruck.Id);
 
-            await service.DeleteTruck(createdTruck.Id);
+        await Assert.ThrowsAsync<TruckNotFoundException>(async () =>
+        {
+            await service.GetTruck(createdTruck.Id);
+        });
+    }
 
-            await Assert.ThrowsAsync<TruckNotFoundException>(async () =>
-            {
-                await service.GetTruck(createdTruck.Id);
-            });
-        }
+    [Fact]
+    public async Task CreateTruck_Should_Throw_When_Name_Is_Empty()
+    {
+        var service = CreateTruckService();
+        var request = new CreateTruckRequest
+        {
+            Name = ""
+        };
+        var exception = await Assert.ThrowsAsync<ValidationException>(async () =>
+        {
+            await service.CreateTruck(request);
+        });
+        Assert.Equal("Name cannot be empty", exception.Message);
+    }
+
+    [Fact]
+    public async Task UpdateTruck_Should_Throw_When_Name_Is_Empty()
+    {
+        var service = CreateTruckService();
+        var request = new CreateTruckRequest
+        {
+            Name = ""
+        };
+        int test_truck_id = 1;
+        var exception = await Assert.ThrowsAsync<ValidationException>(async () =>
+        {
+            await service.UpdateTruck(test_truck_id, request);
+        });
+        Assert.Equal("Name cannot be empty", exception.Message);
     }
 }

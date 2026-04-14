@@ -42,6 +42,9 @@ public class TruckService
 
     public async Task<TruckResponse> CreateTruck(CreateTruckRequest dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Name))
+            throw new ValidationException("Name cannot be empty");
+
         var truck = new Truck()
         {
             Name = dto.Name
@@ -58,6 +61,9 @@ public class TruckService
 
     public async Task<TruckResponse> UpdateTruck(int truckId, CreateTruckRequest dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Name))
+            throw new ValidationException("Name cannot be empty");
+
         var truck = await _context.Trucks.FindAsync(truckId);
         if (truck == null)
             throw new TruckNotFoundException(truckId);
