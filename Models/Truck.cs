@@ -12,7 +12,7 @@ public class Truck
     public TruckLoad AddLoad(int weight = TruckLoad.DefaultWeight, string destination = TruckLoad.DefaultDestination)
     {
         if (GetTotalWeight() + weight > MaxCapacity)
-            throw new InvalidOperationException("Truck overloaded");
+            throw new InvalidOperationException("Truck overloaded.");
 
         var load = new TruckLoad(Id, weight, destination);
 
