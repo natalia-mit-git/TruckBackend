@@ -1,6 +1,12 @@
-public class ValidationException : Exception
+namespace TruckBackend.Models.Exceptions
 {
-    public ValidationException(string message) : base(message)
+    public class ValidationException : Exception
     {
+        public string UserMessage { get; }
+
+        public ValidationException(string message) : base(message)
+        {
+            UserMessage = $"Validation error.";
+        }
     }
 }

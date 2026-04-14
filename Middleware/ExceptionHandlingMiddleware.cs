@@ -31,18 +31,19 @@ public class ExceptionHandlingMiddleware
             TruckNotFoundException => StatusCodes.Status404NotFound,
             ValidationException => StatusCodes.Status400BadRequest,
             KeyNotFoundException => StatusCodes.Status404NotFound,
-            InvalidOperationException => StatusCodes.Status400BadRequest,
             _ => StatusCodes.Status500InternalServerError
         };
 
         response.StatusCode = statusCode;
 
+        string message = "An error occurred.";
+        if (ex is TruckNotFoundException nf)
+            message = nf.UserMessage;
+        else if (ex is ValidationException ve)
+            message = ve.UserMessage;
         var responseObj = new
         {
-            message = ex is TruckNotFoundException ex1
-                ? ex1.UserMessage
-                : "An error occurred",
-
+            message,
             details = ex.Message
         };
 

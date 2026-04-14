@@ -1,3 +1,5 @@
+using TruckBackend.Models.Exceptions;
+
 namespace TruckBackend.Models;
 
 // Represents the truck itself
@@ -12,7 +14,8 @@ public class Truck
     public TruckLoad AddLoad(int weight = TruckLoad.DefaultWeight, string destination = TruckLoad.DefaultDestination)
     {
         if (GetTotalWeight() + weight > MaxCapacity)
-            throw new InvalidOperationException("Truck overloaded.");
+            throw new ValidationException("Truck " + Name + " overloaded. It was loadded with " + GetTotalWeight() +
+                " kg and the new load is " + weight + " kg. Total weight cannot exceed " + MaxCapacity + " kg.");
 
         var load = new TruckLoad(Id, weight, destination);
 
