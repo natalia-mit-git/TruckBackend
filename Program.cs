@@ -45,3 +45,5 @@ app.MapControllers();
 app.MapGet("/", () => "API is running");
 Console.WriteLine($"ENV: {builder.Environment.EnvironmentName}");
 app.Run();
+
+public partial class Program { }
