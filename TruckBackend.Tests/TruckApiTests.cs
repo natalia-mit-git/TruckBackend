@@ -3,12 +3,13 @@ using System.Net.Http.Json;
 using Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using TruckBackend.Contracts.Responses;
+using TruckBackend.Tests;
 
-public class TruckApiTests : IClassFixture<WebApplicationFactory<Program>>
+public class TruckApiTests : IClassFixture<TruckApiFactory>
 {
     private readonly HttpClient _client;
 
-    public TruckApiTests(WebApplicationFactory<Program> factory)
+    public TruckApiTests(TruckApiFactory factory)
     {
         _client = factory.CreateClient();
     }
