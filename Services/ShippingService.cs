@@ -2,6 +2,7 @@ using TruckBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using TruckBackend.Contracts.Requests;
 using TruckBackend.Contracts.Responses;
+using TruckBackend.Models.Exceptions;
 
 namespace TruckBackend.Services;
 
@@ -21,7 +22,7 @@ public class ShippingService
             .FirstOrDefaultAsync(t => t.Id == truckId);
 
         if (truck == null)
-            throw new KeyNotFoundException($"Truck with id {truckId} not found");
+            throw new TruckNotFoundException(truckId);
 
         var load = truck.AddLoad(dto.Weight, dto.Destination);
 

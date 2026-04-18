@@ -6,7 +6,7 @@ using TruckBackend.Contracts.Responses;
 namespace TruckBackend.Controllers;
 
 [ApiController]
-[Route("api/trucks")]
+[Route("api/truck")]
 public class TruckController : ControllerBase
 {
     private readonly ShippingService _shippingService;
@@ -24,11 +24,9 @@ public class TruckController : ControllerBase
     }
 
     [HttpGet("{truckId}")]
-    public async Task<ActionResult<List<TruckResponse>>> GetTruck(int truckId)
+    public async Task<ActionResult<TruckResponse>> GetTruck(int truckId)
     {
         var truck = await _truckService.GetTruck(truckId);
-        if (truck == null)
-            return NotFound();
         return Ok(truck);
     }
 
@@ -47,45 +45,22 @@ public class TruckController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<TruckResponse>> CreateTruck(CreateTruckRequest request)
     {
-        try
-        {
-            var truck = await _truckService.CreateTruck(request);
-            return Ok(truck);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-
+        var truck = await _truckService.CreateTruck(request);
+        return Ok(truck);
     }
 
     [HttpPut("{truckId}")]
     public async Task<ActionResult<TruckResponse>> UpdateTruck(int truckId, CreateTruckRequest request)
     {
-        try
-        {
-            var truck = await _truckService.UpdateTruck(truckId, request);
-            return Ok(truck);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-
+        var truck = await _truckService.UpdateTruck(truckId, request);
+        return Ok(truck);
     }
 
     [HttpDelete("{truckId}")]
     public async Task<ActionResult> DeleteTruck(int truckId)
     {
-        try
-        {
-            await _truckService.DeleteTruck(truckId);
-            return Ok();
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        await _truckService.DeleteTruck(truckId);
+        return Ok();
     }
 
     [HttpPost("{truckId}/loads")]
@@ -93,18 +68,7 @@ public class TruckController : ControllerBase
         int truckId,
         CreateTruckLoadRequest request)
     {
-        try
-        {
-            var load = await _shippingService.CreateLoad(truckId, request);
-            return Ok(load);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(ex.Message);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var load = await _shippingService.CreateLoad(truckId, request);
+        return Ok(load);
     }
 }

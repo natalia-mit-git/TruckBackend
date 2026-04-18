@@ -8,7 +8,7 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
 
 - CRUD operations for trucks and their loads via REST API
 - Persistent data storage using PostgreSQL and Entity Framework Core
-- Layered architecture (Controller → Service → Data Access)
+- Layered architecture (Controller → Service → Data Access) with centralized exception handling
 - Docker Compose setup for development and production environments
 - Consistent development environment using DevContainer
 - Automated tests using xUnit and EF Core InMemory provider
@@ -42,7 +42,7 @@ A RESTful backend service for managing trucks and their loads, built with .NET 8
     ```bash
     POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
     ```
-    The values should match the PostgreSQL credentials shown in the [Access](#access) section below.
+    The values should match the PostgreSQL credentials shown in the [Access](#access) section below
 1. Open the project in VS Code and select:
     ```bash
     Dev Containers: Rebuild Container

@@ -1,5 +1,6 @@
-using TruckBackend.Models;
 using Xunit;
+using TruckBackend.Models;
+using TruckBackend.Models.Exceptions;
 
 public class TruckTests
 {
@@ -21,7 +22,13 @@ public class TruckTests
 
         truck.AddLoad(weight: 9000, destination: "Munich");
 
-        Assert.Throws<InvalidOperationException>(() => truck.AddLoad(weight: 2000, destination: "Berlin"));
+        var exception = Assert.Throws<ValidationException>(() =>
+            {
+                truck.AddLoad(weight: 2000, destination: "Berlin");
+            });
+        var expectedMessage = "Truck  overloaded. It was loadded with 9000 kg and the new load is 2000 kg. Total " +
+                                "weight cannot exceed 10000 kg.";
+        Assert.Equal(expectedMessage, exception.Message);
     }
 
     [Fact]

@@ -4,12 +4,12 @@ using Xunit;
 public class TruckLoadTests
 {
     [Fact]
-    public void Constructor_Should_Set_Default_Weight()
+    public void Constructor_Should_Set_Default_Values()
     {
-        var load = new TruckLoad(1, TruckLoad.DefaultWeight, "Berlin");
+        var load = new TruckLoad(1);
 
         Assert.Equal(TruckLoad.DefaultWeight, load.Weight);
-        Assert.Equal("Berlin", load.Destination);
+        Assert.Equal(TruckLoad.DefaultDestination, load.Destination);
     }
 
     [Fact]
